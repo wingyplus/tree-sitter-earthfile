@@ -19,7 +19,8 @@ module.exports = grammar({
       repeat(NL),
     ),
 
-    version: _$ => prec.left(seq(alias('VERSION', 'VERSION'), WS, '0.7')),
+    version: $ => prec.left(seq('VERSION', WS, field('version_number', $.version_number))),
+    version_number: _$ => seq(/[0-9]/, optional(seq('.', repeat(/[0-9]/)))),
 
     stmts: $ => seq(
       $.stmt,

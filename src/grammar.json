@@ -67,12 +67,7 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "STRING",
-              "value": "VERSION"
-            },
-            "named": false,
+            "type": "STRING",
             "value": "VERSION"
           },
           {
@@ -80,11 +75,48 @@
             "value": "[ \\t]"
           },
           {
-            "type": "STRING",
-            "value": "0.7"
+            "type": "FIELD",
+            "name": "version_number",
+            "content": {
+              "type": "SYMBOL",
+              "name": "version_number"
+            }
           }
         ]
       }
+    },
+    "version_number": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[0-9]"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "."
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[0-9]"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "stmts": {
       "type": "SEQ",

@@ -157,6 +157,22 @@
   {
     "type": "version",
     "named": true,
+    "fields": {
+      "version_number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "version_number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "version_number",
+    "named": true,
     "fields": {}
   },
   {
@@ -164,7 +180,7 @@
     "named": false
   },
   {
-    "type": "0.7",
+    "type": ".",
     "named": false
   },
   {
