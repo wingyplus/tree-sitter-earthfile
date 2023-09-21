@@ -1,0 +1,35 @@
+============
+Simple
+============
+
+VERSION 0.7
+FROM alpine
+
+---
+
+(program
+  (version)
+  (stmts
+    (stmt
+      (command_stmt
+        (from_stmt
+          (target_ref
+	    (classical_ref
+	      (image_name))))))))
+
+============
+No VERSION
+============
+
+FROM alpine
+
+---
+
+(program
+  (stmts
+    (stmt
+      (command_stmt
+        (from_stmt
+          (target_ref
+	    (classical_ref
+	      (image_name))))))))
