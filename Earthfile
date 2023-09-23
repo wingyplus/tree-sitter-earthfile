@@ -1,3 +1,5 @@
-VERSION 0.7
+VERSION 0.8
 FROM alpine
-FROM +target
+
+a-target:
+	FROM +b-target

@@ -2,29 +2,24 @@
 /// @ts-check
 
 const NL = /[ \t]*(?:\n|\r\n)/;
-const WS = /[ \t]/;
 
 module.exports = grammar({
   name: 'earthfile',
-  conflicts: $ => [
-    [$.program],
-    [$.stmts],
-  ],
   rules: {
     program: $ => seq(
-      repeat(NL),
       optional($.version),
-      repeat1(NL),
-      optional(seq($.stmts, NL)),
-      repeat(NL),
+      optional($.stmts),
+      optional($.targets),
     ),
 
-    version: $ => prec.left(seq('VERSION', WS, field('version_number', $.version_number))),
-    version_number: _$ => seq(/[0-9]/, optional(seq('.', repeat(/[0-9]/)))),
+    version: $ => seq('VERSION', $._whitespace, field('version_number', $.version_number)),
+    version_number: _$ => seq(/[0-9]/, optional(seq('.', repeat1(/[0-9]/)))),
+
+    // Statements
 
     stmts: $ => seq(
       $.stmt,
-      repeat(seq(NL, repeat(NL), $.stmt))
+      repeat($.stmt)
     ),
 
     // TODO: add more statements.
@@ -36,27 +31,55 @@ module.exports = grammar({
     //
     // Command Statement.
     //
-    from_stmt: $ => prec.left(seq('FROM', WS, $.target_ref)),
+    from_stmt: $ => seq('FROM', $._whitespace, $.target_ref),
+
+    // Targets
+
+    targets: $ => seq(
+      $.target_or_user_command,
+      repeat($.target_or_user_command)
+    ),
+
+    // TODO: user command.
+    target_or_user_command: $ => $.target,
+
+    target: $ =>
+      seq(
+        seq($.target_header, NL),
+        field('body', optional($.target_block))
+      ),
+    target_header: $ =>
+      seq(
+        field('name', alias(/[a-z][a-zA-Z0-9\-.]*/, $.name)),
+        ':'
+      ),
+    target_block: $ =>
+      seq($._indent, $.stmt, NL),
 
     // TODO: relative ref
     // TODO: absolute ref
     // TODO: remote ref
     target_ref: $ => choice($.local_ref, $.classical_ref),
 
-    local_ref: $ => seq('+', field('target', $.local_ref_name)),
-    local_ref_name: _$=> seq(/[a-z]/, repeat(/[a-z0-9\-.]/)),
+    local_ref: $ =>
+      seq(
+        '+',
+        field('target', alias(/[a-z][a-z0-9\-]*/, $.name))
+      ),
 
     // Borrow from https://github.com/camdencheek/tree-sitter-dockerfie.
     classical_ref: $ =>
       seq(
-        field("name", $.image_name),
-        field("tag", optional($.image_tag)),
+        field("name", alias(/[a-z][a-z0-9\-]*/, $.name)),
+        optional(
+          seq(
+            ':',
+            field("tag", alias(/[a-z0-9\-.]*/, $.tag))
+          )
+        ),
       ),
-    image_name: _$ => seq(/[a-z]/, repeat(/[a-z0-9\-]/)),
-    image_tag: _$ =>
-      seq(
-        ':',
-        repeat(/[a-z0-9\-.]/)
-      ),
+
+    _indent: $ => repeat1($._whitespace),
+    _whitespace: _$ => /[ \t]/,
   }
 })

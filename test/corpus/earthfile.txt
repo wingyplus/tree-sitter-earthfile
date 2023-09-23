@@ -16,7 +16,7 @@ FROM alpine
         (from_stmt
           (target_ref
 	    (classical_ref
-	      (image_name))))))))
+	      (name))))))))
 
 ============
 Parse VERSION
@@ -57,4 +57,42 @@ FROM alpine
         (from_stmt
           (target_ref
 	    (classical_ref
-	      (image_name))))))))
+	      (name))))))))
+
+============
+Parse target no body
+============
+
+b-target:
+
+---
+
+(program
+  (targets
+    (target_or_user_command
+      (target
+        (target_header
+	  (name))))))
+
+============
+Ref the target
+============
+
+b-target:
+  FROM +a-target
+
+---
+
+(program
+  (targets
+    (target_or_user_command
+      (target
+        (target_header
+	  (name))
+      (target_block
+        (stmt
+	  (command_stmt
+	    (from_stmt
+	      (target_ref
+	        (local_ref
+		  (name)))))))))))
