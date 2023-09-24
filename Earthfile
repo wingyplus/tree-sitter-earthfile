@@ -1,5 +1,5 @@
 VERSION 0.8
-FROM alpine
 
 a-target:
-	FROM +b-target
+  EXPOSE 3000/tcp
+  EXPOSE 5000

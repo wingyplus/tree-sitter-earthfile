@@ -26,12 +26,58 @@ module.exports = grammar({
     stmt: $ => choice($.command_stmt),
 
     // TODO: add more statements.
-    command_stmt: $ => choice($.from_stmt),
+    command_stmt: $ => choice($.from_stmt, $.expose_stmt),
 
     //
     // Command Statement.
     //
+    // TODO:
+    // - RUN
+    // - COPY
+    // - ARG
+    // - SAVE ARTIFACT
+    // - SAVE IMAGE
+    // - BUILD
+    // - VERSION
+    // - PROJECT
+    // - GIT CLONE
+    // - FROM DOCKERFILE
+    // - WITH DOCKER
+    // - IF
+    // - FOR
+    // - WAIT
+    // - LET
+    // - SET
+    // - TRY
+    // - CACHE
+    // - LOCALLY
+    // - COMMAND
+    // - DO
+    // - IMPORT
+    // - CMD
+    // - LABEL
+    // - EXPOSE
+    // - ENV
+    // - ENTRYPOINT
+    // - VOLUME
+    // - USER
+    // - WORKDIR
+    // - HEALTHCHECK
+    // - HOST
+    // - PIPELINE
+    // - TRIGGER
+    // - SHELL
+    // - ADD
+    // - ONBUILD
+    // - STOPSIGNAL
     from_stmt: $ => seq('FROM', $._whitespace, $.target_ref),
+
+    expose_stmt: $ => seq('EXPOSE', $.port_protocol, repeat(seq(' ', $.port_protocol))),
+
+    port_protocol: $ => seq($.port, optional(seq('/', $.protocol))),
+
+    port: _$ => /\d+/,
+    protocol: _$ => /[a-z]+/,
 
     // Targets
 
@@ -54,7 +100,7 @@ module.exports = grammar({
         ':'
       ),
     target_block: $ =>
-      seq($._indent, $.stmt, NL),
+      seq($._indent, $.stmt, repeat(seq(NL, $._indent, $.stmt)), NL),
 
     // TODO: relative ref
     // TODO: absolute ref
@@ -79,7 +125,7 @@ module.exports = grammar({
         ),
       ),
 
-    _indent: $ => repeat1($._whitespace),
+    _indent: $ => seq($._whitespace, repeat($._whitespace)),
     _whitespace: _$ => /[ \t]/,
   }
 })

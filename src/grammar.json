@@ -127,6 +127,10 @@
         {
           "type": "SYMBOL",
           "name": "from_stmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expose_stmt"
         }
       ]
     },
@@ -146,6 +150,73 @@
           "name": "target_ref"
         }
       ]
+    },
+    "expose_stmt": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "EXPOSE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "port_protocol"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": " "
+              },
+              {
+                "type": "SYMBOL",
+                "name": "port_protocol"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "port_protocol": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "port"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "/"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "protocol"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "port": {
+      "type": "PATTERN",
+      "value": "\\d+"
+    },
+    "protocol": {
+      "type": "PATTERN",
+      "value": "[a-z]+"
     },
     "targets": {
       "type": "SEQ",
@@ -233,6 +304,26 @@
         {
           "type": "SYMBOL",
           "name": "stmt"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[ \\t]*(?:\\n|\\r\\n)"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_indent"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "stmt"
+              }
+            ]
+          }
         },
         {
           "type": "PATTERN",
@@ -324,11 +415,20 @@
       ]
     },
     "_indent": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_whitespace"
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_whitespace"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_whitespace"
+          }
+        }
+      ]
     },
     "_whitespace": {
       "type": "PATTERN",

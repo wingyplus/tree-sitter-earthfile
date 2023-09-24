@@ -34,7 +34,26 @@
       "required": true,
       "types": [
         {
+          "type": "expose_stmt",
+          "named": true
+        },
+        {
           "type": "from_stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expose_stmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "port_protocol",
           "named": true
         }
       ]
@@ -69,6 +88,25 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "port_protocol",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "port",
+          "named": true
+        },
+        {
+          "type": "protocol",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -155,7 +193,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -252,6 +290,10 @@
     "fields": {}
   },
   {
+    "type": " ",
+    "named": false
+  },
+  {
     "type": "+",
     "named": false
   },
@@ -260,7 +302,15 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": "EXPOSE",
     "named": false
   },
   {
@@ -273,6 +323,14 @@
   },
   {
     "type": "name",
+    "named": true
+  },
+  {
+    "type": "port",
+    "named": true
+  },
+  {
+    "type": "protocol",
     "named": true
   },
   {
