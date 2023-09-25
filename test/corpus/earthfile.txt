@@ -1,0 +1,123 @@
+============
+Simple
+============
+
+VERSION 0.7
+FROM alpine
+
+---
+
+(program
+  (version
+    (version_number))
+  (stmts
+    (stmt
+      (command_stmt
+        (from_stmt
+          (target_ref
+	    (classical_ref
+	      (name))))))))
+
+============
+Parse VERSION
+============
+
+VERSION 0.7
+
+---
+
+(program
+  (version
+    (version_number)))
+
+============
+Parse VERSION 2
+============
+
+VERSION 0.6
+
+---
+
+(program
+  (version
+    (version_number)))
+
+============
+No VERSION
+============
+
+FROM alpine
+
+---
+
+(program
+  (stmts
+    (stmt
+      (command_stmt
+        (from_stmt
+          (target_ref
+	    (classical_ref
+	      (name))))))))
+
+============
+Parse target no body
+============
+
+b-target:
+
+---
+
+(program
+  (targets
+    (target_or_user_command
+      (target
+        (target_header
+	  (name))))))
+
+============
+Ref the target
+============
+
+b-target:
+  FROM +a-target
+
+---
+
+(program
+  (targets
+    (target_or_user_command
+      (target
+        (target_header
+	  (name))
+      (target_block
+        (stmt
+	  (command_stmt
+	    (from_stmt
+	      (target_ref
+	        (local_ref
+		  (name)))))))))))
+
+============
+EXPOSE
+============
+
+b-target:
+  EXPOSE 5000
+  EXPOSE 4000 5000
+  EXPOSE 4000/tcp
+  EXPOSE 4000/tcp 5000/tcp
+---
+
+(program
+  (targets
+    (target_or_user_command
+      (target
+        (target_header
+	  (name))
+      (target_block
+        (stmt
+	  (command_stmt
+	    (from_stmt
+	      (target_ref
+	        (local_ref
+		  (name)))))))))))

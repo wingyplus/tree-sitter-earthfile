@@ -1,0 +1,31 @@
+{
+  "name": "tree-sitter-earthfile",
+  "version": "0.1.0",
+  "description": "Tree-sitter for Earthfile",
+  "main": "bindings/node",
+  "scripts": {
+    "ts:gen": "tree-sitter generate",
+    "ts:parse": "tree-sitter parse",
+    "ts:test": "tree-sitter test",
+    "ts:hl": "tree-sitter highlight",
+    "test": "npm run ts:test"
+  },
+  "author": "Thanabodee Charoenpiriyakij",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "nan": "^2.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "eslint-config-google": "^0.14.0",
+    "tree-sitter-cli": "^0.20.8"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.earthfile",
+      "file-types": [
+        "Earthfile"
+      ]
+    }
+  ]
+}
