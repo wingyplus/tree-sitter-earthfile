@@ -2,7 +2,8 @@ VERSION 0.7
 FROM alpine
 
 a-target:
-  FROM node
-  FROM node
-  FROM node
-  FROM +b-target
+  EXPOSE 9090
+  EXPOSE 9090 5000
+  EXPOSE 9090/tcp
+  EXPOSE 9090/tcp 5000/udp
+  EXPOSE 9090 5000/udp

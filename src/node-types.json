@@ -15,6 +15,21 @@
     }
   },
   {
+    "type": "expose_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "port_protocol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "from_statement",
     "named": true,
     "fields": {},
@@ -37,6 +52,32 @@
     "type": "image_name",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "port_protocol",
+    "named": true,
+    "fields": {
+      "port": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "port",
+            "named": true
+          }
+        ]
+      },
+      "protocol": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "protocol",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "program",
@@ -69,6 +110,10 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "expose_statement",
+          "named": true
+        },
         {
           "type": "from_statement",
           "named": true
@@ -185,7 +230,15 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": "EXPOSE",
     "named": false
   },
   {
@@ -198,6 +251,14 @@
   },
   {
     "type": "name",
+    "named": true
+  },
+  {
+    "type": "port",
+    "named": true
+  },
+  {
+    "type": "protocol",
     "named": true
   },
   {

@@ -78,6 +78,7 @@ module.exports = grammar({
     statement: ($) =>
       choice(
         $.from_statement,
+        $.expose_statement
       ),
 
     from_statement: ($) =>
@@ -85,6 +86,25 @@ module.exports = grammar({
         'FROM',
         choice($.image_name, $.target_ref),
       ),
+
+    expose_statement: ($) =>
+      seq(
+        'EXPOSE',
+        // HACK: make eof work as expected.
+        prec.left(seq($.port_protocol, repeat(seq(whitespace, $.port_protocol)), newline))
+      ),
+
+    port_protocol: ($) =>
+      seq(
+        field('port', $.port),
+        optional(seq('/', field('protocol', $.protocol)))
+      ),
+
+    port: (_$) =>
+      token.immediate(repeat1(digit)),
+
+    protocol: (_$) =>
+      token.immediate(repeat1(char)),
 
     image_name: (_$) =>
       seq(

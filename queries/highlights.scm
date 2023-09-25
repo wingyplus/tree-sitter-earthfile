@@ -1,6 +1,7 @@
 [
   "VERSION"
   "FROM"
+  "EXPOSE"
 ] @keyword
 
 (version_statement
@@ -12,7 +13,9 @@
 (target_header
   name: (name) @function)
 
-;; EXPOSE
+(port_protocol
+  port: (port) @number)
 
-; (port_protocol (port) @number)
-; (port_protocol (port) @number (protocol))
+(port_protocol
+  port: (port) @number
+  protocol: (protocol) @string)
