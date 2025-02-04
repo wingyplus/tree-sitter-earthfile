@@ -5,9 +5,7 @@
       "camelcase": "Earthfile",
       "scope": "source.earthfile",
       "path": ".",
-      "file-types": [
-        "Earthfile"
-      ],
+      "file-types": ["Earthfile"],
       "highlights": "queries/highlights.scm",
       "injections": "queries/injections.scm",
       "injection-regex": "earthfile"
@@ -33,6 +31,7 @@
     "node": true,
     "python": true,
     "rust": true,
-    "swift": true
+    "swift": true,
+    "zig": true
   }
 }
