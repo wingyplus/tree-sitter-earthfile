@@ -8,13 +8,13 @@ pub fn build(b: *std.Build) !void {
     const reuse_alloc = b.option(bool, "reuse-allocator", "Reuse the library allocator") orelse false;
 
     const lib: *std.Build.Step.Compile = if (shared) b.addSharedLibrary(.{
-        .name = "tree-sitter-earthfile",
+        .name = "tree_sitter_earthfile",
         .pic = true,
         .target = target,
         .optimize = optimize,
         .link_libc = true,
     }) else b.addStaticLibrary(.{
-        .name = "tree-sitter-earthfile",
+        .name = "tree_sitter_earthfile",
         .target = target,
         .optimize = optimize,
         .link_libc = true,
@@ -51,7 +51,7 @@ pub fn build(b: *std.Build) !void {
     });
     module.linkLibrary(lib);
 
-    const ts_dep = b.dependency("tree-sitter", .{
+    const ts_dep = b.dependency("tree_sitter", .{
         .target = target,
         .optimize = optimize,
     });
